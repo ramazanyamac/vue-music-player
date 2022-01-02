@@ -7,18 +7,35 @@ let vm = Vue.createApp({
           artist: "Gheorge Zamfir",
           cover: "https://i.scdn.co/image/ab67616d0000b273fecfac11994325a39cd03dec",
           source: "music/The-Lonely-Shepherd.mp3",
+          fav: false,
         },
         {
           name: "Once Upon a Time in the West",
           artist: "Ennio Morricone",
           cover: "https://i.scdn.co/image/ab67616d0000b2732b23062e3b70cc2725b4f960",
           source: "music/Once-Upon-a-Time-in-the-West.mp3",
+          fav: false,
         },
         {
           name: "So Was Red",
           artist: "Thomas Newman",
           cover: "https://i.scdn.co/image/ab67616d0000b273e710c1f5b228046932790031",
           source: "music/So-Was-Red.mp3",
+          fav: false,
+        },
+        {
+          name: "Leaving Wallbrook/On The Road",
+          artist: "Hans Zimmer",
+          cover: "https://i.scdn.co/image/ab67616d0000b273bf5889f82cc38018de92724a",
+          source: "music/On-The-Road.mp3",
+          fav: false,
+        },
+        {
+          name: "Cast Away",
+          artist: "Geek Music",
+          cover: "https://i.scdn.co/image/ab67616d0000b2733eff8e9536d0f0db4260e03a",
+          source: "music/Cast-Away.mp3",
+          fav: false,
         },
       ],
       songIndex: 0,
@@ -29,7 +46,8 @@ let vm = Vue.createApp({
       isPlay: false,
       progressValue: null,
       currentDate: null,
-      duration: null
+      duration: null,
+      isRandom: false,
     }
   },
   methods: {
@@ -43,6 +61,8 @@ let vm = Vue.createApp({
       audio.onloadedmetadata = () => {
           this.duration = audio.duration;
       }
+
+      this.$refs.myAudio.load()
     },
     playSong() {
       this.isPlay = !this.isPlay;
@@ -54,25 +74,51 @@ let vm = Vue.createApp({
       }
       
     },
+    refreshSong(){
+      this.isPlay = true;
+
+      if(this.isPlay) {
+        var playPromise =  this.$refs.myAudio.play();
+        if(playPromise !== undefined){
+          playPromise.then(_ => {
+            this.$refs.myAudio.pause();
+          })
+          .catch(error => {
+            this.$refs.myAudio.play();
+          });
+        }
+      }
+    },
+    randomNumber(min, max){
+      return Math.floor(Math.random() * (max - min + 1) ) + min;
+    },
     prevSong() {
-      this.songIndex--;
+      if(this.random){
+        this.songIndex = this.songIndex - this.randomNumber(1,this.musics.length);
+      } else {
+        this.songIndex--;
+      }
 
       if (this.songIndex < 0) {
         this.songIndex = this.musics.length - 1;
       }
 
-      this.loadSong()      
-      this.playSong();
+      this.loadSong();
+      this.refreshSong();
     },
     nextSong() {
-      this.songIndex++;
+      if(this.random){
+        this.songIndex = this.songIndex + this.randomNumber(1,this.musics.length);
+      } else {
+        this.songIndex++;
+      }
 
       if (this.songIndex > this.musics.length - 1) {
         this.songIndex = 0;
       }
       
-      this.loadSong()
-      this.playSong();
+      this.loadSong();
+      this.refreshSong();
     },
     updateProgress(e) {
       const { duration, currentTime } = e.srcElement;
@@ -80,12 +126,12 @@ let vm = Vue.createApp({
       this.progressValue = progressPercent;
     },
     setProgress(e) {
-      const width = e.clientY - 256;
+      const width = e.target.parentElement.clientWidth;
       const clickX = e.offsetX;
       const duration = this.$refs.myAudio.duration;
       this.$refs.myAudio.currentTime = (clickX / width) * duration;
     },
-    timeCalculate: function(time){
+    timeCalculate(time){
       var current_hour = parseInt(time / 3600) % 24,
       current_minute = parseInt(time / 60) % 60,
       current_seconds_long = time % 60,
@@ -96,6 +142,9 @@ let vm = Vue.createApp({
     },
     currentTimeCalc(){
       this.currentDate = this.timeCalculate(this.$refs.myAudio.currentTime)
+    },
+    favSong() {
+      this.musics = this.musics.map((music, index) => index === this.songIndex ? {...music, fav: !music.fav} : music)
     }
   },
   computed: {
@@ -104,7 +153,16 @@ let vm = Vue.createApp({
     },
     title: function(){
       return this.isPlay ? 'Now Playing' : 'Pause'
-    }
+    },
+    reload: function(){
+      return this.isRandom && 'action-btn-active';
+    },
+    fav: function(){
+      return this.musics[this.songIndex].fav && 'action-btn-fav';
+    },
+  },
+  watch: {
+    
   },
   mounted(){
     this.loadSong();

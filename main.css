@@ -13,6 +13,7 @@ body {
   justify-content: center;
   font-family: 'Lato', sans-serif;
   margin: 0;
+  color: #383b43;
 }
 
 .container {
@@ -40,7 +41,7 @@ body {
 .cover img {
   object-fit: cover;
   border-radius: 15px;
-  box-shadow: 0 20px 20px 0 rgba(227, 230, 241, 0.6);
+  box-shadow: 0 15px 15px 0 rgb(189, 183, 205);
 }
 
 .info {
@@ -82,12 +83,37 @@ body {
   font-size: 20px;
   cursor: pointer;
   padding: 10px;
-  margin: 0 20px;
+  margin: 0 10px;
 }
 
 .action-btn.action-btn-big {
   color: #383b44;
   font-size: 30px;
+}
+
+.action-btn.action-btn-active {
+  color: #383b44;
+}
+
+.action-btn.action-btn-random {
+  color: #383b44;
+}
+
+.action-btn.action-btn-fav {
+  color: #ff54b0;
+}
+
+
+.action-btn.action-btn-left {
+  position: absolute;
+  left: 30px;
+  margin: 0;
+}
+
+.action-btn.action-btn-right {
+  position: absolute;
+  right: 30px;
+  margin: 0;
 }
 
 .action-btn:focus {
@@ -113,7 +139,7 @@ body {
 }
 
 .progress-container {
-  background: #E3E6F1;
+  background: #edeaed;
   border-radius: 5px;
   cursor: pointer;
   margin: 10px 0;
@@ -122,7 +148,8 @@ body {
 }
 
 .progress {
-  background-color: #fe53b0;
+  position: relative;
+  background-color: #ff54b0;
   border-radius: 5px;
   height: 100%;
   width: 0%;
