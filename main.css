@@ -1,0 +1,130 @@
+@import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #E6EAF4;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Lato', sans-serif;
+  margin: 0;
+}
+
+.container {
+  background-color: #fff;
+  box-shadow: 0 20px 20px 0 rgba(227, 230, 241, 0.6);
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 560px;
+  padding: 20px 30px;
+  position: relative;
+  margin: auto;
+  z-index: 10;
+}
+
+.heading {
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.heading .title {
+  font-size: 15px;
+}
+
+.cover img {
+  object-fit: cover;
+  border-radius: 15px;
+  box-shadow: 0 20px 20px 0 rgba(227, 230, 241, 0.6);
+}
+
+.info {
+  padding: 20px 0;
+}
+
+.info .music {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.info .artist {
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.time {
+  display: flex;
+  justify-content: space-between;
+}
+
+.time .count {
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.navigation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.action-btn {
+  background-color: #fff;
+  border: 0;
+  color: #b2b3b9;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 10px;
+  margin: 0 20px;
+}
+
+.action-btn.action-btn-big {
+  color: #383b44;
+  font-size: 30px;
+}
+
+.action-btn:focus {
+  outline: 0;
+}
+
+.music-info {
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 15px 15px 0 0;
+  width: 100%;
+  transition: transform 0.3s ease-in, opacity 0.3s ease-in;
+  z-index: 0;
+  opacity: 1;
+}
+
+.music-container.play .music-info {
+  opacity: 1;
+  transform: translateY(-100%);
+}
+
+.music-info h4 {
+  margin: 0;
+}
+
+.progress-container {
+  background: #E3E6F1;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 10px 0;
+  height: 8px;
+  width: 100%;
+}
+
+.progress {
+  background-color: #fe53b0;
+  border-radius: 5px;
+  height: 100%;
+  width: 0%;
+  transition: width 0.1s linear;
+}

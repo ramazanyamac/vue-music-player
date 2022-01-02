@@ -1,0 +1,72 @@
+<!DOCTYPE>
+<html>
+
+<head>
+  <title>VueJS - Music Player</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css"
+    />
+  <link rel="stylesheet" type="text/css" href="main.css" />
+</head>
+
+<body>
+  <div id="app">
+    <div class="container">
+    <!-- Heading-->
+    <header class="heading">
+        <h1 class="title">{{title}}</h1>
+    </header>
+    <!-- Heading-->
+
+    <!-- Cover-->
+    <picture class="cover">
+        <img :src="cover" alt="music-cover" width="300" height="300"/>
+    </picture>
+    <!--Cover-->
+
+      <!-- Info-->
+      <div class="info">
+        <div class="music">{{name}}</div>
+        <div class="artist">{{artist}}</div>
+      </div>
+      <!-- Info-->
+
+      <!-- Time -->
+        <div class="time">
+          <div class="count">{{currentDate}}</div>
+          <div class="count">{{getTime}}</div>
+        </div>
+      <!--Time -->
+
+      <!--Progress-->
+      <div class="music-info">
+        <div class="progress-container" @click="setProgress">
+          <div class="progress" :style="{ width: progressValue + '%'}"></div>
+        </div>
+      </div>
+      <!--Progress-->
+      
+      <!--Navigation-->
+      <div class="navigation">
+        <button class="action-btn" @click="prevSong">
+          <i class="fas fa-backward"></i>
+        </button>
+        <button class="action-btn action-btn-big" @click="playSong()">
+          <i class="fas fa-pause" v-if="isPlay"></i>
+          <i class="fas fa-play" v-else></i>
+        </button>
+        <button class="action-btn" @click="nextSong">
+          <i class="fas fa-forward"></i>
+        </button>
+      </div>
+      <!--Navigation-->
+
+      <!--Audio-->
+      <audio :src="music" ref="myAudio" @ended="nextSong" @timeupdate="[updateProgress, currentTimeCalc]"></audio>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/vue@next"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>
